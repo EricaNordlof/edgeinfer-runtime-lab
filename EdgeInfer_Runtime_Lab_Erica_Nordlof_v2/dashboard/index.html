@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>EdgeInfer Runtime Lab | Erica Nordlöf</title>
+  <meta name="description" content="Independent embedded C++ and edge deep-learning portfolio lab with Linux APIs, inference runtime, accelerator abstraction, fallback and performance metrics.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <strong>EdgeInfer Runtime Lab</strong>
+    <small>Embedded C++ · Linux · Edge Deep Learning</small>
+  </div>
+  <span class="status"><i></i> Verified build & tests</span>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <span class="eyebrow">INDEPENDENT PORTFOLIO LAB</span>
+      <h1>Runtime. Inference. Fallback. Reliability.</h1>
+      <p>
+        A small C/C++ edge-inference runtime built to explore the engineering
+        concerns behind embedded deep-learning platforms: Linux integration,
+        backend abstraction, performance, memory and predictable failure handling.
+      </p>
+      <div class="chips">
+        <span>C++17</span><span>C API</span><span>Linux/POSIX</span><span>CMake</span>
+        <span>Deep Learning</span><span>mmap</span><span>Unix sockets</span><span>CI</span>
+      </div>
+    </div>
+    <aside>
+      <span class="label">Honest scope</span>
+      <strong>Simulated accelerator</strong>
+      <p>The NPU backend is simulated to demonstrate integration, failure handling and CPU fallback. It is not presented as real hardware experience.</p>
+    </aside>
+  </section>
+
+  <section class="metrics">
+    <article><span>Average latency</span><strong>0.000199 ms</strong><small>1000 CPU inferences</small></article>
+    <article><span>P95 latency</span><strong>0.000113 ms</strong><small>Measured locally</small></article>
+    <article><span>Max RSS</span><strong>391472 KB</strong><small>Process memory</small></article>
+    <article><span>Tests</span><strong>100%</strong><small>Passed</small></article>
+  </section>
+
+  <section class="panel">
+    <div class="section-head">
+      <span class="eyebrow">ARCHITECTURE</span>
+      <h2>Small runtime, embedded-style concerns</h2>
+    </div>
+    <div class="flow">
+      <div><span>01</span><strong>Application</strong><small>C or C++ caller</small></div>
+      <b>→</b>
+      <div><span>02</span><strong>Runtime API</strong><small>Validation & lifecycle</small></div>
+      <b>→</b>
+      <div><span>03</span><strong>Backend</strong><small>CPU / simulated NPU</small></div>
+      <b>→</b>
+      <div><span>04</span><strong>Inference</strong><small>Dense → ReLU → Softmax</small></div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <article>
+      <span class="eyebrow">LINUX</span>
+      <h3>Lower-level APIs</h3>
+      <p>Model loading with <code>mmap</code>, monotonic timing, process memory metrics and a Unix-domain socket inference service.</p>
+      <div class="mini">open · fstat · mmap · clock_gettime · getrusage · socket · bind · accept</div>
+    </article>
+
+    <article>
+      <span class="eyebrow">RELIABILITY</span>
+      <h3>Failure → fallback</h3>
+      <p>A simulated accelerator failure can be injected deliberately. The runtime detects it and switches to the CPU backend when fallback is enabled.</p>
+      <pre>EDGEINFER_SIM_NPU_FAIL=1
+sim-npu  ✕
+   ↓
+cpu      ✓</pre>
+    </article>
+
+    <article>
+      <span class="eyebrow">DEEP LEARNING</span>
+      <h3>Real deterministic inference</h3>
+      <p>The included binary model runs an actual tiny neural network rather than a mocked JSON response.</p>
+      <pre>4 inputs
+  ↓
+Dense 4×8
+  ↓
+ReLU
+  ↓
+Dense 8×3
+  ↓
+Softmax</pre>
+    </article>
+
+    <article>
+      <span class="eyebrow">TOOLING</span>
+      <h3>Build & quality</h3>
+      <p>CMake builds the runtime, tests validate inference and fallback, and CI definitions are included for GitHub Actions and Jenkins.</p>
+      <div class="mini">CMake · CTest · Docker · Jenkins · GitHub Actions</div>
+    </article>
+  </section>
+
+  <section class="panel result">
+    <div>
+      <span class="eyebrow">VERIFIED RUN</span>
+      <h2>Benchmark output</h2>
+      <p>This result comes from the project built and executed during package validation.</p>
+    </div>
+    <pre>Backend requested: cpu
+Backend used: cpu
+Fallback used: no
+Iterations: 1000
+Average latency: 0.000199 ms
+P95 latency: 0.000113 ms
+Max RSS: 391472 KB
+Output: 0.329809 0.347412 0.322778</pre>
+  </section>
+
+  <section class="cta">
+    <div>
+      <h2>Inspect the implementation</h2>
+      <p>The repository contains the C/C++ runtime, Linux service, tests, architecture notes and debugging documentation.</p>
+    </div>
+    <a href="https://github.com/EricaNordlof/edgeinfer-runtime-lab" target="_blank" rel="noopener">Open GitHub →</a>
+  </section>
+</main>
+
+<footer>
+  <strong>Erica Nordlöf</strong>
+  <span>Independent embedded / edge-DL portfolio project</span>
+</footer>
+</body>
+</html>
